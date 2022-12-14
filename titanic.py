@@ -11,14 +11,13 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import mean_absolute_error
 from sklearn.base import BaseEstimator,TransformerMixin
-from plotnine import ggplot, aes, geom_point
 from sklearn.preprocessing import KBinsDiscretizer
 from lightgbm import LGBMClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import confusion_matrix
 import numpy as np
 import seaborn as sns
-import seaborn.objects as so
+#import seaborn.objects as so
 from plotnine import *
 from lazypredict.Supervised import LazyClassifier
 from lazypredict.Supervised import LazyRegressor
@@ -55,10 +54,10 @@ class Cut(BaseEstimator, TransformerMixin):
         return X_copy
     
 #000. Separation of the Columns
-columns_drop=np.array(['PassengerId'])
+#columns_drop=np.array(['PassengerId'])
 columns_numerical=np.array(['Pclass','Age','SibSp','Parch','Fare'])
 columns_categorical=np.array(['Sex'])
-x_variables=np.concatenate([columns_drop,columns_numerical,columns_categorical])
+x_variables=np.concatenate([columns_numerical,columns_categorical])
 y_variable='Survived'
 
 
@@ -96,7 +95,7 @@ ggplot(df_analysis) +aes(x="str_variable", y='prob',fill="bool_value") + geom_ba
 #1. Manipulate Data
 # Processing Numerical and Categorical
 preprocessor = ColumnTransformer([
-    ('dropper', ColumnsDrop(columns_drop),columns_drop),
+   # ('dropper', ColumnsDrop(columns_drop),columns_drop),
     ('median', SimpleImputer(strategy='median'), ['Fare']),
     ('numerical', SimpleImputer(strategy='constant'), columns_numerical),
    # ('cut', KBinsDiscretizer(n_bins=3, encode='ordinal', strategy='uniform'),['Age']),
